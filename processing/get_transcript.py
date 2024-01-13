@@ -3,6 +3,8 @@ from moviepy.editor import VideoFileClip
 import speech_recognition as sr
 import os
 
+from get_theme import theme_prompts
+
 app = Flask(__name__)
 
 uploads_dir = os.path.join(app.instance_path, 'uploads')
@@ -19,6 +21,9 @@ def upload_video():
         return 'No video file part', 400
 
     video = request.files['video']
+    theme = request.form['theme']
+    theme_prompt = "Ensure a professional tone, with appropriate marketing music"
+
     if video.filename == '':
         return 'No selected file', 400
 
@@ -42,9 +47,11 @@ def upload_video():
             except sr.RequestError as e:
                 return f'Could not request results from Google Speech Recognition service; {e}', 500
 
-        # TODO: do sentiment analysis on transcript (:eyes)
+        # TODO: do sentiment analysis on transcript (:eyes) combined with the theme prompt
+        if theme in theme_prompts:
+            theme_prompt = theme_prompts[theme]
 
-        return render_template('result.html', transcript=transcript, video_filename=os.path.relpath(video_path, uploads_dir))
+        return render_template('result.html', transcript=transcript, video_filename=os.path.relpath(video_path, uploads_dir), theme_prompt=theme_prompt)
 
         # meis amis
 

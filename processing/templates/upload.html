@@ -9,9 +9,18 @@
 <body>
     <div class="container">
         <h1>Upload Your Video</h1>
-        <p>Upload a video file, and we'll analyze its sentiment to generate background music.</p>
+        <p>Upload a video file, select a theme, and we'll analyze its sentiment to generate background music.</p>
         <form action="/upload" method="post" enctype="multipart/form-data">
-            <input type="file" name="video" accept="video/*">
+            <input type="file" name="video" accept="video/*"><br>
+            <label for="theme">Choose a theme:</label>
+            <select name="theme" id="theme">
+                <option value="cowboy">Cowboy</option>
+                <option value="classical">Classical</option>
+                <option value="vampire">Vampire</option>
+                <option value="postmodern">Post-Modernism</option>
+                <option value="professional">Professional</option>
+                <!-- Add more themes as needed -->
+            </select><br>
             <button type="submit">Upload Video</button>
         </form>
     </div>
