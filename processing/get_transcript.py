@@ -6,6 +6,29 @@ import os
 
 from get_theme import theme_prompts
 
+# ML stuff
+from transformers import pipeline
+from audiocraft.models import musicgen
+import torchaudio
+import torch
+from scipy.io import wavfile
+from PIL import Image
+
+if torch.cuda.is_available():
+    device = torch.device('cuda')
+# elif torch.backends.mps.is_available():
+#     device = torch.device('mps')
+else:
+    device = torch.device('cpu')
+
+# MusicGen Model
+# model = musicgen.MusicGen.get_pretrained('medium', device=device)
+# model.set_generation_params(duration=150)
+
+# ViT2GPT2 Caption Model
+# image_to_text = pipeline("image-to-text", model="nlpconnect/vit-gpt2-image-captioning")
+
+
 app = Flask(__name__)
 
 uploads_dir = os.path.join(app.instance_path, 'uploads')
