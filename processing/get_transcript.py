@@ -40,15 +40,24 @@ def transcribe_audio(audio_path):
 
 
 def mix_soundtrack(video_clip, theme):
-    """Mix theme soundtrack with video audio."""
+    """Mix theme soundtrack with video audio and apply additional audio effects."""
     soundtrack_path = os.path.join('soundtracks', theme + '.mp3')
     if not os.path.exists(soundtrack_path):
         print(f"Soundtrack not found: {soundtrack_path}")
-        return video_clip  # return original clip if soundtrack is missing
+        return video_clip
+
     try:
-        soundtrack = AudioFileClip(soundtrack_path).volumex(0.5)  # reduce volume to 50%
-        final_audio = CompositeAudioClip([video_clip.audio, soundtrack.set_duration(video_clip.duration)])
-        video_clip.audio = final_audio
+        soundtrack = AudioFileClip(soundtrack_path).fx(afx.audio_normalize).fx(afx.audio_fadein, 1.0)
+
+        # if the original video has audio, mix it with the soundtrack
+        if video_clip.audio:
+            original_audio = video_clip.audio.fx(afx.audio_normalize).volumex(3)
+            soundtrack = soundtrack.volumex(0.0001)  # Adjust the soundtrack volume
+            final_audio = CompositeAudioClip([original_audio, soundtrack.set_duration(video_clip.duration)])
+        else:
+            final_audio = soundtrack.set_duration(video_clip.duration)
+
+        video_clip.audio = final_audio.fx(afx.audio_fadeout, 1.0)
     except Exception as e:
         print(f"Error mixing soundtrack: {e}")
         return video_clip
