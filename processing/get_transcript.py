@@ -16,12 +16,12 @@ from get_theme import theme_prompts
 import subprocess
 
 
-if torch.cuda.is_available():
-    device = torch.device('cuda')
+# if torch.cuda.is_available():
+#     device = torch.device('cuda')
 # elif torch.backends.mps.is_available():
 #     device = torch.device('mps')
-else:
-    device = torch.device('cpu')
+# else:
+#     device = torch.device('cpu')
 
 # MusicGen Model
 # model = musicgen.MusicGen.get_pretrained('medium', device=device)
