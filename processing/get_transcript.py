@@ -13,6 +13,8 @@ from transformers import pipeline
 import torch
 from scipy.io import wavfile
 from PIL import Image
+import subprocess
+
 
 if torch.cuda.is_available():
     device = torch.device('cuda')
@@ -39,17 +41,33 @@ os.makedirs(uploads_dir, exist_ok=True)
 def index():
     return render_template('upload.html')
 
+
 @app.route('/')
 def page():
     return render_template('page.html')
 
 
+def convert_video_format(input_path, output_path):
+    """Convert video to a compatible format using FFmpeg."""
+    try:
+        command = ['ffmpeg', '-i', input_path, '-c:v', 'libx264', '-strict', '-2', output_path]
+        subprocess.run(command, check=True)
+        return output_path
+    except subprocess.CalledProcessError as e:
+        raise ValueError(f"Error converting video format: {e}")
+
+
 def extract_audio(video_path):
     """Extract audio from video and return the path to the audio file."""
-    video_clip = VideoFileClip(video_path)
-    audio_path = video_path + '.wav'
-    video_clip.audio.write_audiofile(audio_path)
-    return audio_path
+    try:
+        video_clip = VideoFileClip(video_path)
+        audio_path = video_path + '.wav'
+        video_clip.audio.write_audiofile(audio_path)
+        return audio_path
+    except Exception as e:
+        error_message = f"Error extracting audio: {e}"
+        print(error_message)
+        raise ValueError(error_message)
 
 
 def transcribe_audio(audio_path):
@@ -77,8 +95,8 @@ def mix_soundtrack(video_clip, theme):
 
         # if the original video has audio, mix it with the soundtrack
         if video_clip.audio:
-            original_audio = video_clip.audio.fx(afx.audio_normalize).volumex(3)
-            soundtrack = soundtrack.volumex(0.0001)  # Adjust the soundtrack volume
+            original_audio = video_clip.audio.fx(afx.audio_normalize).volumex(1)
+            soundtrack = soundtrack.volumex(0.1)  # Adjust the soundtrack volume
             final_audio = CompositeAudioClip([original_audio, soundtrack.set_duration(video_clip.duration)])
         else:
             final_audio = soundtrack.set_duration(video_clip.duration)
