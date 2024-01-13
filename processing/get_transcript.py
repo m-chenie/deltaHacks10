@@ -26,7 +26,7 @@ else:
 # model.set_generation_params(duration=150)
 
 # ViT2GPT2 Caption Model
-image_to_text = pipeline("image-to-text", model="nlpconnect/vit-gpt2-image-captioning")
+# image_to_text = pipeline("image-to-text", model="nlpconnect/vit-gpt2-image-captioning")
 
 app = Flask(__name__)
 
@@ -90,9 +90,9 @@ def mix_soundtrack(video_clip, theme):
 
     return video_clip
 
-def get_caption(image):
-    image = Image.fromarray(image)
-    return image_to_text(image)[0]['generated_text']
+# def get_caption(image):
+#     image = Image.fromarray(image)
+#     return image_to_text(image)[0]['generated_text']
 
 # def generate_music(transcript, caption):
 #     model = None
@@ -142,8 +142,8 @@ def upload_video():
     # apply filters based on theme
     video_clip = apply_filters(video_clip, theme)
 
-    # caption of the frame
-    caption = get_caption(video_clip.get_frame(5))
+    # Generate Custom BGM
+    # caption = get_caption(video_clip.get_frame(5))
     # generate_music(transcript, caption)
 
     # save the edited video
