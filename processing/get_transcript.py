@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template
-from moviepy.editor import VideoFileClip
+from moviepy.editor import VideoFileClip, AudioFileClip, CompositeAudioClip
 import speech_recognition as sr
 import os
 
@@ -51,7 +51,24 @@ def upload_video():
         if theme in theme_prompts:
             theme_prompt = theme_prompts[theme]
 
-        return render_template('result.html', transcript=transcript, video_filename=os.path.relpath(video_path, uploads_dir), theme_prompt=theme_prompt)
+        # TODO: assume now we have a soundtrack, stored in the audio directory
+        soundtrack_path = os.path.join('soundtracks', theme + '.mp3')
+        soundtrack = AudioFileClip(soundtrack_path).volumex(0.5)  # Reduce volume to 50%
+
+        # Mix the soundtrack with the original audio
+        original_audio = video_clip.audio
+        final_audio = CompositeAudioClip([original_audio, soundtrack]).set_duration(video_clip.duration)
+        video_clip.audio = final_audio
+
+        # TODO: apply filter via theme
+        # ...
+
+        edited_video_path = os.path.join(uploads_dir, 'edited_' + video.filename)
+        video_clip.write_videofile(edited_video_path)
+
+
+
+        return render_template('result.html', transcript=transcript, video_filename=os.path.relpath(edited_video_path, uploads_dir), theme_prompt=theme_prompt)
 
         # meis amis
 
