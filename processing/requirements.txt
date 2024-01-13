@@ -1,0 +1,4 @@
+Flask
+moviepy
+SpeechRecognition
+pocketsphinx
