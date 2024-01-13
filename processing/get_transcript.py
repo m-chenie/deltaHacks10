@@ -8,8 +8,8 @@ from get_theme import theme_prompts
 
 # ML stuff
 from transformers import pipeline
-from audiocraft.models import musicgen
-import torchaudio
+# from audiocraft.models import musicgen
+# import torchaudio
 import torch
 from scipy.io import wavfile
 from PIL import Image
@@ -26,8 +26,7 @@ else:
 # model.set_generation_params(duration=150)
 
 # ViT2GPT2 Caption Model
-# image_to_text = pipeline("image-to-text", model="nlpconnect/vit-gpt2-image-captioning")
-
+image_to_text = pipeline("image-to-text", model="nlpconnect/vit-gpt2-image-captioning")
 
 app = Flask(__name__)
 
@@ -91,6 +90,18 @@ def mix_soundtrack(video_clip, theme):
 
     return video_clip
 
+def get_caption(image):
+    image = Image.fromarray(image)
+    return image_to_text(image)[0]['generated_text']
+
+# def generate_music(transcript, caption):
+#     model = None
+#     res = model.generate([
+#         transcript,
+#         caption,
+#     ],
+#     progress=True)
+#     wavfile.write(f"./soundtracks/custom.wav", rate=32000, data=res[0, 0].cpu().numpy())
 
 def apply_filters(video_clip, theme):
     if theme == 'cowboy':
@@ -130,6 +141,10 @@ def upload_video():
 
     # apply filters based on theme
     video_clip = apply_filters(video_clip, theme)
+
+    # caption of the frame
+    caption = get_caption(video_clip.get_frame(5))
+    # generate_music(transcript, caption)
 
     # save the edited video
     edited_video_filename = 'edited_' + os.path.splitext(video.filename)[0] + '.mp4'

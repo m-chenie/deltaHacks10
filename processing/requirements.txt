@@ -3,8 +3,6 @@ moviepy
 SpeechRecognition
 pocketsphinx
 torch
-torchaudio
 transformers
 scipy
 numpy
-audiocraft
