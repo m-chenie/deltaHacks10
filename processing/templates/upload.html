@@ -1,37 +1,115 @@
 <!DOCTYPE html>
-<html lang="en">
+<html
+  lang="en"
+  class="text-white scroll-smooth bg-gradient-to-r from-slate-900 to-indigo-950"
+>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Video Upload for Sentiment Analysis</title>
     <link rel="stylesheet" href="/static/style.css" />
     <link rel="stylesheet" href="/static/upload.css" />
-      <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body>
-    <div class="container">
-        <div class="container mx-auto p-8 max-w-lg">
+  <body class="font-sans m-0 p-0 justify-center items-center h-screen">
+    <!-- Navbar -->
+    <nav
+      class="bg-transparent py-6 px-24 flex items-center justify-between z-10"
+    >
+      <a class="font-bold text-xl tracking-tight" href="#">Music</a>
+      <div class="flex items-center">
+        <div class="px-6">
+          <a
+            class="text-sm px-6 py-3 leading-none rounded-full hover:bg-gray-700"
+            href="/"
+            >Home</a
+          >
+        </div>
+
+        <a
+          class="inline-block px-6 py-3 z-10 text-sm font-medium bg-violet-600 border border-violet-600 rounded-full active:text-violet-500 hover:bg-transparent hover:text-violet-600 focus:outline-none focus:ring"
+          href="/upload"
+        >
+          Try it Out
+        </a>
+      </div>
+    </nav>
+    <!-- Navbar Ends -->
+
+    <div class="rounded-md shadow-md text-center py-12 px-36">
+      <div
+        class="bg-white bg-opacity-20 rounded-lg shadow-lg backdrop-filter backdrop-blur-lg py-12 flex justify-content flex-col"
+      >
         <h1 class="text-4xl font-bold mb-6 text-center">Upload Your Video</h1>
-        <p class="text-lg mb-6 text-gray-400 text-center">Upload a video file, select a theme, and we'll analyze its sentiment to generate background music.</p>
-        <form action="/upload" method="post" enctype="multipart/form-data" class="bg-gray-800 p-6 rounded-lg shadow-lg">
-            <div class="mb-4">
-                <label for="videoInput" class="block mb-2 font-medium">Video File</label>
-                <input id="videoInput" type="file" name="video" accept="video/*" class="w-full p-2 bg-gray-700 rounded">
+        <p class="text-lg mb-6 text-gray-300 text-center">
+          Upload a video file, select a theme, and we'll analyze its sentiment
+          to generate background music.
+        </p>
+        <div class="w-full px-4 md:px-8 lg:px-12">
+          <form
+            action="/upload"
+            method="post"
+            enctype="multipart/form-data"
+            class="bg-gray-800 p-6 rounded-lg shadow-lg mx-auto max-w-2xl"
+          >
+            <div
+              class="w-[400px] relative border-2 border-gray-300 border-dashed rounded-lg p-6 mx-auto"
+              id="dropzone"
+            >
+              <input
+                type="file"
+                id="videoInput"
+                name="video"
+                accept="video/*"
+                class="absolute inset-0 w-full h-full opacity-0 z-50"
+              />
+              <div class="text-center">
+                <img
+                  class="mx-auto h-12 w-12"
+                  src="https://www.svgrepo.com/show/357902/image-upload.svg"
+                  alt="Upload Icon"
+                />
+                <h3 class="mt-2 text-sm font-medium text-gray-900">
+                  <label for="videoInput" class="relative cursor-pointer">
+                    <span>Drag and drop</span>
+                    <span class="text-indigo-600"> or browse</span>
+                    <span>to upload</span>
+                  </label>
+                </h3>
+                <p class="mt-1 text-xs text-gray-500">
+                  MP4, AVI, MOV up to 10MB
+                </p>
+              </div>
+              <p id="file-info" class="mt-2 text-sm text-gray-500 hidden">
+                File: <span id="file-name"></span>
+              </p>
             </div>
             <div class="mb-4">
-                <label for="theme" class="block mb-2 font-medium">Choose a Theme</label>
-                <select name="theme" id="theme" class="w-full p-2 bg-gray-700 rounded">
-                    <option value="cowboy">Cowboy</option>
-                    <option value="classical">Classical</option>
-                    <!-- Add more themes as needed -->
-                </select>
+              <label for="theme" class="block mb-2 font-medium"
+                >Choose a Theme</label
+              >
+              <select
+                name="theme"
+                id="theme"
+                class="w-full p-2 bg-gray-700 rounded"
+              >
+                <option value="cowboy">Cowboy</option>
+                <option value="classical">Classical</option>
+                <!-- Add more themes as needed -->
+              </select>
             </div>
-            <button type="submit" class="w-full py-3 mt-4 bg-blue-600 hover:bg-blue-700 rounded text-lg font-semibold transition duration-200">Upload Video</button>
-        </form>
-             <h2>record a video</h2>
+            <button
+              type="submit"
+              class="w-full py-3 mt-4 bg-blue-600 hover:bg-blue-700 rounded text-lg font-semibold transition duration-200"
+            >
+              Upload Video
+            </button>
+          </form>
+        </div>
+        <h2>record a video</h2>
         <div>
-            <video id="video" width="640" height="480" autoplay="true"></video>
-            <button id="recordButton">Record</button>
+          <video id="video" width="640" height="480" autoplay="true"></video>
+          <button id="recordButton">Record</button>
         </div>
     </div>
 
@@ -61,37 +139,79 @@
                     var blob = new Blob(chunks, { type: 'video/webm' });
                     chunks = [];
 
-                    var file = new File([blob], 'recorded-video.webm', { type: 'video/webm' });
-                    var dataTransfer = new DataTransfer();
-                    dataTransfer.items.add(file);
-                    fileInput.files = dataTransfer.files;
+                var file = new File([blob], "./recorded-video.mp4", {
+                  type: "video/mp4",
+                });
 
-                    // Optional: Reset the recording state
-                    isRecording = false;
-                    recordButton.textContent = 'Record';
+                var dataTransfer = new DataTransfer();
+                dataTransfer.items.add(file);
 
-                    // Trigger the form submit
-                    fileInput.form.submit();
-                };
+                // Set the DataTransfer object to the file input
+                fileInput.files = dataTransfer.files;
+                console.log("hope this worked");
+                // fileInput.files = [file];
+                uploadForm.submit();
+
+                // var downloadLink = document.createElement('a');
+                // downloadLink.href = URL.createObjectURL(blob);
+                // downloadLink.download = 'recorded-video.mp4';
+                // document.body.appendChild(downloadLink);
+                // downloadLink.click();
+                // document.body.removeChild(downloadLink);
+              };
             })
             .catch(function (error) {
-                console.log("Something went wrong!", error);
+              console.log("Something went wrong!");
             });
         }
 
-        recordButton.addEventListener('click', function () {
-            if (!isRecording) {
-                mediaRecorder.start();
-                recordButton.textContent = 'Stop Recording';
-                isRecording = true; // Update the recording state
-            } else {
-                mediaRecorder.stop();
-                isRecording = false; // Update the recording state
-            }
+        // Handle record button click
+        recordButton.addEventListener("click", function () {
+          if (mediaRecorder.state === "inactive") {
+            // Start recording
+            mediaRecorder.start();
+            recordButton.textContent = "Stop Recording";
+          } else {
+            // Stop recording
+            mediaRecorder.stop();
+            recordButton.textContent = "Record";
+          }
         });
-    </script>
 
+        // file drag-and-drop functionality
+        var dropzone = document.getElementById("dropzone");
+        var fileInfo = document.getElementById("file-info");
+        var fileNameElement = document.getElementById("file-name");
 
+        function handleFile(file) {
+          fileNameElement.textContent = file.name;
+          fileInfo.classList.remove("hidden");
+        }
+
+        dropzone.addEventListener("dragover", (e) => {
+          e.preventDefault();
+          dropzone.classList.add("border-indigo-600");
+        });
+
+        dropzone.addEventListener("dragleave", (e) => {
+          e.preventDefault();
+          dropzone.classList.remove("border-indigo-600");
+        });
+
+        dropzone.addEventListener("drop", (e) => {
+          e.preventDefault();
+          dropzone.classList.remove("border-indigo-600");
+          var file = e.dataTransfer.files[0];
+          handleFile(file);
+        });
+
+        var input = document.getElementById("videoInput");
+
+        input.addEventListener("change", (e) => {
+          var file = e.target.files[0];
+          handleFile(file);
+        });
+      </script>
     </div>
   </body>
 </html>
