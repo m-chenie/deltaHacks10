@@ -33,73 +33,65 @@
             <video id="video" width="640" height="480" autoplay="true"></video>
             <button id="recordButton">Record</button>
         </div>
-
     </div>
-        <script>
-            var video = document.querySelector("#video");
-            var recordButton = document.querySelector("#recordButton");
-            var uploadForm = document.querySelector("#submit");
-            var fileInput = document.querySelector('#videoInput');
-        
-            var mediaRecorder;
-            var chunks = [];
-        
-            if (navigator.mediaDevices.getUserMedia) {
-                navigator.mediaDevices.getUserMedia({ video: true })
-                .then(function (stream) {
-                    video.srcObject = stream;
-                    mediaRecorder = new MediaRecorder(stream);
-        
-                    mediaRecorder.ondataavailable = function (e) {
-                        if (e.data.size > 0) {
-                            chunks.push(e.data);
-                        }
-                    };
-        
-                    // Handle stop event
-                    mediaRecorder.onstop = function () {
-                        // Create a Blob from the recorded chunks
-                        var blob = new Blob(chunks, { type: 'video/mp4' });
-                        chunks = [];
 
-                        var file = new File([blob], './recorded-video.mp4', { type: 'video/mp4' });
-                        
-                        var dataTransfer = new DataTransfer();
-                        dataTransfer.items.add(file);
+    <script>
+        var video = document.querySelector("#video");
+        var recordButton = document.querySelector("#recordButton");
+        var fileInput = document.querySelector('#videoInput');
 
-                        // Set the DataTransfer object to the file input
-                        fileInput.files = dataTransfer.files
-                        console.log("hope this worked");
-                        // fileInput.files = [file];
-                        uploadForm.submit();
+        var mediaRecorder;
+        var chunks = [];
+        var isRecording = false; // State to track if recording is active
 
-                        // var downloadLink = document.createElement('a');
-                        // downloadLink.href = URL.createObjectURL(blob);
-                        // downloadLink.download = 'recorded-video.mp4';
-                        // document.body.appendChild(downloadLink);
-                        // downloadLink.click();
-                        // document.body.removeChild(downloadLink);
-                    };
-                })
-                .catch(function (error) {
-                    console.log("Something went wrong!");
-                });
-            }
-        
-            // Handle record button click
-            recordButton.addEventListener('click', function () {
-                if (mediaRecorder.state === 'inactive') {
-                    // Start recording
-                    mediaRecorder.start();
-                    recordButton.textContent = 'Stop Recording';
-                } else {
-                    // Stop recording
-                    mediaRecorder.stop();
+        if (navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia({ video: true })
+            .then(function (stream) {
+                video.srcObject = stream;
+
+                mediaRecorder = new MediaRecorder(stream, { mimeType: 'video/webm; codecs="vp8, opus"' });
+
+                mediaRecorder.ondataavailable = function (e) {
+                    if (e.data.size > 0) {
+                        chunks.push(e.data);
+                    }
+                };
+
+                mediaRecorder.onstop = function () {
+                    var blob = new Blob(chunks, { type: 'video/webm' });
+                    chunks = [];
+
+                    var file = new File([blob], 'recorded-video.webm', { type: 'video/webm' });
+                    var dataTransfer = new DataTransfer();
+                    dataTransfer.items.add(file);
+                    fileInput.files = dataTransfer.files;
+
+                    // Optional: Reset the recording state
+                    isRecording = false;
                     recordButton.textContent = 'Record';
-                }
+
+                    // Trigger the form submit
+                    fileInput.form.submit();
+                };
+            })
+            .catch(function (error) {
+                console.log("Something went wrong!", error);
             });
-        </script>
-        
+        }
+
+        recordButton.addEventListener('click', function () {
+            if (!isRecording) {
+                mediaRecorder.start();
+                recordButton.textContent = 'Stop Recording';
+                isRecording = true; // Update the recording state
+            } else {
+                mediaRecorder.stop();
+                isRecording = false; // Update the recording state
+            }
+        });
+    </script>
+
+
     </div>
   </body>
 </html>
