@@ -7,12 +7,12 @@ import os
 from get_theme import theme_prompts
 
 # ML stuff
-from transformers import pipeline
+# from transformers import pipeline
 # from audiocraft.models import musicgen
 # import torchaudio
-import torch
-from scipy.io import wavfile
-from PIL import Image
+# import torch
+# from scipy.io import wavfile
+# from PIL import Image
 import subprocess
 
 
