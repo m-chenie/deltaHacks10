@@ -13,11 +13,11 @@ static_dir = os.path.join(app.root_path, 'static')
 os.makedirs(uploads_dir, exist_ok=True)
 
 
-@app.route('/')
+@app.route('/upload')
 def index():
     return render_template('upload.html')
 
-@app.route('/page')
+@app.route('/')
 def page():
     return render_template('page.html')
 
