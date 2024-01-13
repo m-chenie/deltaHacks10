@@ -6,30 +6,35 @@
     <title>Video Upload for Sentiment Analysis</title>
     <link rel="stylesheet" href="/static/style.css" />
     <link rel="stylesheet" href="/static/upload.css" />
+      <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
     <div class="container">
-        <h1>Upload Your Video</h1>
-        <p>Upload a video file, select a theme, and we'll analyze its sentiment to generate background music.</p>
-        <form action="/upload" method="post" enctype="multipart/form-data">
-            <input id="videoInput" type="file" name="video" accept="video/*"><br>
-            <label for="theme">Choose a theme:</label>
-            <select name="theme" id="theme">
-                <option value="cowboy">Cowboy</option>
-                <option value="classical">Classical</option>
-                <option value="vampire">Vampire</option>
-                <option value="postmodern">Post-Modernism</option>
-                <option value="professional">Professional</option>
-                <!-- Add more themes as needed -->
-            </select><br>
-            <button type="submit">Upload Video</button>
+        <div class="container mx-auto p-8 max-w-lg">
+        <h1 class="text-4xl font-bold mb-6 text-center">Upload Your Video</h1>
+        <p class="text-lg mb-6 text-gray-400 text-center">Upload a video file, select a theme, and we'll analyze its sentiment to generate background music.</p>
+        <form action="/upload" method="post" enctype="multipart/form-data" class="bg-gray-800 p-6 rounded-lg shadow-lg">
+            <div class="mb-4">
+                <label for="videoInput" class="block mb-2 font-medium">Video File</label>
+                <input id="videoInput" type="file" name="video" accept="video/*" class="w-full p-2 bg-gray-700 rounded">
+            </div>
+            <div class="mb-4">
+                <label for="theme" class="block mb-2 font-medium">Choose a Theme</label>
+                <select name="theme" id="theme" class="w-full p-2 bg-gray-700 rounded">
+                    <option value="cowboy">Cowboy</option>
+                    <option value="classical">Classical</option>
+                    <!-- Add more themes as needed -->
+                </select>
+            </div>
+            <button type="submit" class="w-full py-3 mt-4 bg-blue-600 hover:bg-blue-700 rounded text-lg font-semibold transition duration-200">Upload Video</button>
         </form>
-        <h2>record a video</h2>
+             <h2>record a video</h2>
         <div>
             <video id="video" width="640" height="480" autoplay="true"></video>
             <button id="recordButton">Record</button>
         </div>
-        
+
+    </div>
         <script>
             var video = document.querySelector("#video");
             var recordButton = document.querySelector("#recordButton");
