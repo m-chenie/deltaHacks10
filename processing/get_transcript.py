@@ -17,6 +17,10 @@ os.makedirs(uploads_dir, exist_ok=True)
 def index():
     return render_template('upload.html')
 
+@app.route('/page')
+def page():
+    return render_template('page.html')
+
 
 def extract_audio(video_path):
     """Extract audio from video and return the path to the audio file."""

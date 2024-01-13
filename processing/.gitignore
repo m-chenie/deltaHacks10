@@ -2,3 +2,4 @@
 .idea
 instance/uploads/*
 static/*.mp4
+__pycache__/
