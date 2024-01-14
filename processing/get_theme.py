@@ -1,5 +1,5 @@
 theme_prompts = {
-    "classical": "Give the video a classical theme, accentuated by elegant and sophisticated orchestral music, evoking the grandeur of a ballroom dance or a majestic opera house.",
+    "vibey": "Create vibey mood with lo-fi music",
     "modern": "Infuse the video with a modern theme, featuring contemporary, upbeat music and sleek visuals that capture the essence of today's urban lifestyle and cutting-edge trends.",
     "cinematic": "Create a cinematic atmosphere for the video, using epic and immersive music that transports viewers into a scene from a blockbuster movie, ideal for dramatic landscapes and storytelling.",
     "jazz": "Style the video with a jazz theme, incorporating smooth, rhythmic jazz tunes that take you to a cozy jazz club or a serene night in the city, filled with expressive improvisations.",
