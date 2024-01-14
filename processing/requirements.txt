@@ -2,3 +2,5 @@ Flask
 moviepy
 SpeechRecognition
 pocketsphinx
+scipy
+numpy
