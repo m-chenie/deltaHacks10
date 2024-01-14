@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  flask-app:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=production
+    depends_on:
+      - db
+    # Uncomment these lines to enable live code reloading in development
+    # volumes:
+    #   - .:/home/appuser
+    #   - /home/appuser/__pycache__
+
+#  db:
+#    image: postgres:13
+#    volumes:
+#      - postgres_data:/var/lib/postgresql/data
+#    environment:
+#      POSTGRES_DB: mydatabase
+#      POSTGRES_USER: user
+#      POSTGRES_PASSWORD: password
+#    ports:
+#      - "5432:5432"
+
+volumes:
+  postgres_data:
