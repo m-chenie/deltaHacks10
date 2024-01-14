@@ -50,65 +50,157 @@
           to generate background music.
         </p>
         <div class="w-full px-4 md:px-8 lg:px-12">
-          <form
-            id="uploadForm"
-            action="/upload"
-            method="post"
-            enctype="multipart/form-data"
-            class="bg-gray-800 p-6 rounded-lg shadow-lg mx-auto max-w-2xl"
-          >
-            <div
-              class="w-[400px] relative border-2 border-gray-300 border-dashed rounded-lg p-6 mx-auto"
-              id="dropzone"
+            <form
+              action="/upload"
+              method="post"
+              enctype="multipart/form-data"
+              class="bg-gray-800 p-6 rounded-lg shadow-lg mx-auto max-w-2xl"
             >
-              <input
-                type="file"
-                id="videoInput"
-                name="video"
-                accept="video/*"
-                class="absolute inset-0 w-full h-full opacity-0 z-50"
-              />
-              <div class="text-center">
-                <img
-                  class="mx-auto h-16 w-16"
-                  src="https://www.svgrepo.com/show/357902/image-upload.svg"
-                  alt="Upload Icon"
+              <div
+                class="w-[400px] relative border-2 border-gray-300 border-dashed rounded-lg p-6 mx-auto"
+                id="dropzone"
+              >
+                <input
+                  type="file"
+                  id="videoInput"
+                  name="video"
+                  accept="video/*"
+                  class="absolute inset-0 w-full h-full opacity-0 z-50"
                 />
-                <h3 class="mt-2 text-sm font-medium text-white">
-                  <label for="videoInput" class="relative cursor-pointer">
-                    <span>Drag and drop</span>
-                    <span class="text-indigo-600"> or browse</span>
-                    <span>to upload</span>
-                  </label>
-                </h3>
-                <p class="mt-1 text-xs text-gray-500">
-                  MP4, AVI, MOV up to 10MB
+                <div class="text-center">
+                  <img
+                    class="mx-auto h-16 w-16"
+                    src="https://www.svgrepo.com/show/357902/image-upload.svg"
+                    alt="Upload Icon"
+                  />
+                  <h3 class="mt-2 text-sm font-medium text-white">
+                    <label for="videoInput" class="relative cursor-pointer">
+                      <span>Drag and drop</span>
+                      <span class="text-indigo-600"> or browse</span>
+                      <span>to upload</span>
+                    </label>
+                  </h3>
+                  <p class="mt-1 text-xs text-gray-500">
+                    MP4, AVI, MOV up to 10MB
+                  </p>
+                </div>
+                <p id="file-info" class="mt-2 text-sm text-gray-500 hidden">
+                  File: <span id="file-name"></span>
                 </p>
               </div>
-              <p id="file-info" class="mt-2 text-sm text-gray-500 hidden">
-                File: <span id="file-name"></span>
-              </p>
-            </div>
-            <div class="mb-4 mt-5">
-              <label for="theme" class="block mb-2 font-medium"
-                >Choose a Theme</label
-              >
-              <select
-                name="theme"
-                id="theme"
-                class="w-full p-2 bg-gray-700 rounded"
-              >
-                <option value="classical">Classical</option>
-                <option value="modern">Modern</option>
-                <option value="cinematic">Cinematic</option>
-                <option value="jazz">Jazz</option>
-                <option value="retro">Retro</option>
-                <option value="ambient">Ambient</option>
-              </select>
-            </div>
-            <button
+              <div class="mb-4 mt-5 px-24">
+                <label for="theme" class="block mb-2 font-medium text-white"
+                  >Choose a Theme</label
+                >
+                <div class="grid grid-cols-3 gap-6">
+                  <div
+                    class="theme-card bg-white rounded-xl overflow-hidden shadow-lg"
+                    data-theme="classical"
+                  >
+                    <div
+                      class="aspect-w-2 aspect-h-3 w-24 h-36 flex justify-center items-center"
+                    >
+                      <img
+                        src="../static/classicalFang.png"
+                        alt="Classical"
+                        class="object-contain h-full translate-x-1"
+                      />
+                    </div>
+                    <p class="text-center text-gray-800 font-semibold mt-2">
+                      Classical Fang
+                    </p>
+                  </div>
+                  <div
+                    class="theme-card bg-white rounded-xl overflow-hidden shadow-lg"
+                    data-theme="modern"
+                  >
+                    <div
+                      class="aspect-w-2 aspect-h-3 w-24 h-36 flex justify-center items-center"
+                    >
+                      <img
+                        src="../static/modernKid.png"
+                        alt="Modern"
+                        class="object-contain h-full translate-x-2"
+                      />
+                    </div>
+                    <p class="text-center text-gray-800 font-semibold mt-2">
+                      Modern Kid Cat
+                    </p>
+                  </div>
+                  <div
+                    class="theme-card bg-white rounded-xl overflow-hidden shadow-lg"
+                    data-theme="cinematic"
+                  >
+                    <div
+                      class="aspect-w-2 aspect-h-3 w-24 h-36 flex justify-center items-center"
+                    >
+                      <img
+                        src="../static/cinematicApollo.png"
+                        alt="Cinematic"
+                        class="object-contain h-full translate-x-2"
+                      />
+                    </div>
+                    <p class="text-center text-gray-800 font-semibold mt-2">
+                      Cinematic Apollo
+                    </p>
+                  </div>
+                  <div
+                    class="theme-card bg-white rounded-xl overflow-hidden shadow-lg"
+                    data-theme="jazz"
+                  >
+                    <div
+                      class="aspect-w-2 aspect-h-3 w-24 h-36 flex justify-center items-center"
+                    >
+                      <img
+                        src="../static/jazzKK.png"
+                        alt="Jazz"
+                        class="object-contain h-full translate-x-1"
+                      />
+                    </div>
+                    <p class="text-center text-gray-800 font-semibold mt-2">
+                      Jazz KK Slider
+                    </p>
+                  </div>
+                  <div
+                    class="theme-card bg-white rounded-xl overflow-hidden shadow-lg"
+                    data-theme="retro"
+                  >
+                    <div
+                      class="aspect-w-2 aspect-h-3 w-24 h-36 flex justify-center items-center"
+                    >
+                      <img
+                        src="../static/retroAgnes.png"
+                        alt="Retro"
+                        class="object-contain h-full translate-x-1"
+                      />
+                    </div>
+                    <p class="text-center text-gray-800 font-semibold mt-3">
+                      Retro Agnes
+                    </p>
+                  </div>
+                  <div
+                    class="theme-card bg-white rounded-xl overflow-hidden shadow-lg"
+                    data-theme="ambient"
+                  >
+                    <div
+                      class="aspect-w-2 aspect-h-3 w-24 h-36 flex justify-center items-center"
+                    >
+                      <img
+                        src="../static/ambientBeau.png"
+                        alt="Ambient"
+                        class="object-contain h-full translate-x-4"
+                      />
+                    </div>
+                    <p class="text-center text-gray-800 font-semibold mt-2">
+                      Ambient Beau
+                    </p>
+                  </div>
+                </div>
+                <input type="hidden" name="theme" id="theme" />
+              </div>
+              <button
               type="submit"
-              class="w-full py-3 mt-4 bg-blue-600 hover:bg-blue-700 rounded text-lg font-semibold transition duration-200"
+              class="py-3 mt-4 px-6 text-white text-lg transition-all rounded-lg shadow-xl bg-gradient-to-r from-violet-600 to-indigo-600 hover:bg-gradient-to-r hover:from-violet-400 hover:to-indigo-400 hover:-translate-y-1 duration-200"
             >
               Upload Video
             </button>
@@ -139,7 +231,7 @@
 
     </div>
 
-{#    <script>#}
+ <script>
 {#        var video = document.querySelector("#video");#}
 {#        var recordButton = document.querySelector("#recordButton");#}
 {#        var fileInput = document.querySelector('#videoInput');#}
@@ -204,40 +296,48 @@
 {#          }#}
 {#        });#}
 {##}
-{#        // file drag-and-drop functionality#}
-{#        var dropzone = document.getElementById("dropzone");#}
-{#        var fileInfo = document.getElementById("file-info");#}
-{#        var fileNameElement = document.getElementById("file-name");#}
-{##}
-{#        function handleFile(file) {#}
-{#          fileNameElement.textContent = file.name;#}
-{#          fileInfo.classList.remove("hidden");#}
-{#        }#}
-{##}
-{#        dropzone.addEventListener("dragover", (e) => {#}
-{#          e.preventDefault();#}
-{#          dropzone.classList.add("border-indigo-600");#}
-{#        });#}
-{##}
-{#        dropzone.addEventListener("dragleave", (e) => {#}
-{#          e.preventDefault();#}
-{#          dropzone.classList.remove("border-indigo-600");#}
-{#        });#}
-{##}
-{#        dropzone.addEventListener("drop", (e) => {#}
-{#          e.preventDefault();#}
-{#          dropzone.classList.remove("border-indigo-600");#}
-{#          var file = e.dataTransfer.files[0];#}
-{#          handleFile(file);#}
-{#        });#}
-{##}
-{#        var input = document.getElementById("videoInput");#}
-{##}
-{#        input.addEventListener("change", (e) => {#}
-{#          var file = e.target.files[0];#}
-{#          handleFile(file);#}
-{#        });#}
-{#      </script>#}
+        // file drag-and-drop functionality
+        var dropzone = document.getElementById("dropzone");
+        var fileInfo = document.getElementById("file-info");
+        var fileNameElement = document.getElementById("file-name");
+
+        function handleFile(file) {
+          fileNameElement.textContent = file.name;
+          fileInfo.classList.remove("hidden");
+        }
+
+        dropzone.addEventListener("dragover", (e) => {
+          e.preventDefault();
+          dropzone.classList.add("border-indigo-600");
+        });
+
+        dropzone.addEventListener("dragleave", (e) => {
+          e.preventDefault();
+          dropzone.classList.remove("border-indigo-600");
+        });
+
+        dropzone.addEventListener("drop", (e) => {
+          e.preventDefault();
+          dropzone.classList.remove("border-indigo-600");
+          var file = e.dataTransfer.files[0];
+          handleFile(file);
+        });
+
+        var input = document.getElementById("videoInput");
+
+        input.addEventListener("change", (e) => {
+          var file = e.target.files[0];
+          handleFile(file);
+        });
+
+        document.querySelectorAll(".theme-card").forEach((card) => {
+          card.addEventListener("click", function () {
+            const theme = this.getAttribute("data-theme");
+            document.getElementById("theme").value = theme;
+            // Optionally, add some visual feedback for selection
+          });
+        });
+ </script>
 
 <script>
         const videoElement = document.getElementById('input_video');
@@ -286,6 +386,8 @@
         width: 640,
         height: 480
     }).start();
+
+    
 </script>
 
     </div>
