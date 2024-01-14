@@ -138,11 +138,22 @@ def mix_soundtrack(video_clip, theme):
 #         video_clip = video_clip.set_frame(i, upscale_frame)
 
 def apply_filters(video_clip, theme):
-    if theme == 'cowboy':
-        # Example: Applying a color filter for the cowboy theme
-        video_clip = video_clip.fx(vfx.colorx, 0.7)
-    # Add other themes and their corresponding filters
+    if theme == 'vibey':
+        video_clip = video_clip.fx(vfx.colorx, 1.5).fx(vfx.adjust_contrast, 1.4)
+    elif theme == 'modern':
+        video_clip = video_clip.fx(vfx.colorx, 1.3).fx(vfx.adjust_contrast, 1.5)
+    elif theme == 'cinematic':
+        video_clip = video_clip.fx(vfx.crop, x1=0.1, y1=0.1, x2=-0.1, y2=-0.1).fx(vfx.colorx, 0.8)
+    elif theme == 'jazz':
+        video_clip = video_clip.fx(vfx.color_balance, midtones=[0.3, 0.3, 0.5], shadows=[0.2, 0.2, 0.3])
+    elif theme == 'retro':
+        video_clip = video_clip.fx(vfx.colorx, 0.9).fx(vfx.old_film, color=True)
+    elif theme == 'ambient':
+        video_clip = video_clip.fx(vfx.color_balance, midtones=[0.8, 0.8, 1.0], highlights=[0.9, 0.9, 1.1]).fx(vfx.painting, saturation=1.2)
+    else:
+        pass
     return video_clip
+
 
 @app.route('/upload', methods=['POST'])
 def upload_video():
