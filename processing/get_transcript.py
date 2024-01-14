@@ -15,7 +15,8 @@ from get_theme import theme_prompts
 # from PIL import Image
 # from diffusers import StableDiffusionUpscalePipeline
 import subprocess
-
+import math
+import random
 
 # if torch.cuda.is_available():
 #     device = torch.device('cuda')
@@ -93,7 +94,10 @@ def transcribe_audio(audio_path):
 
 def mix_soundtrack(video_clip, theme):
     """Mix theme soundtrack with video audio and apply additional audio effects."""
-    soundtrack_path = os.path.join('soundtracks', theme + '.mp3')
+    index = random.randint(0, len(os.listdir(f'./soundtracks/{theme}'))-1)
+    
+    soundtrack_path = os.path.join('soundtracks', theme, f"musicgen_out_{theme}{index}.wav")
+
     if not os.path.exists(soundtrack_path):
         print(f"Soundtrack not found: {soundtrack_path}")
         return video_clip
@@ -120,11 +124,12 @@ def mix_soundtrack(video_clip, theme):
 #     image = Image.fromarray(image)
 #     return image_to_text(image)[0]['generated_text']
 
-# def generate_music(transcript, caption):
+# def generate_music(transcript, caption, theme_prompt):
 #     model = None
 #     res = model.generate([
 #         transcript,
 #         caption,
+#         theme_prompt
 #     ],
 #     progress=True)
 #     wavfile.write(f"./soundtracks/custom.wav", rate=32000, data=res[0, 0].cpu().numpy())
@@ -178,7 +183,7 @@ def upload_video():
 
     # Generate Custom BGM
     # caption = get_caption(video_clip.get_frame(5))
-    # generate_music(transcript, caption)
+    # generate_music(transcript, caption, theme_prompt)
 
     # Upscale the resolution of the video
     # upscale_video(video_clip)
