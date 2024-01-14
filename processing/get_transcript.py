@@ -13,6 +13,7 @@ from get_theme import theme_prompts
 # import torch
 # from scipy.io import wavfile
 # from PIL import Image
+# from diffusers import StableDiffusionUpscalePipeline
 import subprocess
 
 
@@ -29,6 +30,13 @@ import subprocess
 
 # ViT2GPT2 Caption Model
 # image_to_text = pipeline("image-to-text", model="nlpconnect/vit-gpt2-image-captioning")
+
+# Upscaler Model
+# model_id = "stabilityai/stable-diffusion-x4-upscaler"
+# pipeline = StableDiffusionUpscalePipeline.from_pretrained(
+#     model_id, revision="fp16", torch_dtype=torch.float16
+# )
+# pipeline = pipeline.to("cuda")
 
 app = Flask(__name__)
 
@@ -121,6 +129,14 @@ def mix_soundtrack(video_clip, theme):
 #     progress=True)
 #     wavfile.write(f"./soundtracks/custom.wav", rate=32000, data=res[0, 0].cpu().numpy())
 
+# def upscale_video(video_clip):
+#     for i in range(0, int(video_clip.duration), 5):
+#         frame = video_clip.get_frame(i)
+#         frame = Image.fromarray(frame)
+#         prompt = ''
+#         upscale_frame = pipeline(propmt=prompt, image=frame).images[0]
+#         video_clip = video_clip.set_frame(i, upscale_frame)
+
 def apply_filters(video_clip, theme):
     if theme == 'cowboy':
         # Example: Applying a color filter for the cowboy theme
@@ -163,6 +179,9 @@ def upload_video():
     # Generate Custom BGM
     # caption = get_caption(video_clip.get_frame(5))
     # generate_music(transcript, caption)
+
+    # Upscale the resolution of the video
+    # upscale_video(video_clip)
 
     # save the edited video
     edited_video_filename = 'edited_' + os.path.splitext(video.filename)[0] + '.mp4'
