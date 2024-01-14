@@ -9,6 +9,10 @@
     <title>Video Upload for Sentiment Analysis</title>
     <link rel="stylesheet" href="/static/style.css" />
     <link rel="stylesheet" href="/static/upload.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils"></script>
@@ -54,8 +58,14 @@
       <div
         class="bg-white bg-opacity-20 p-6 rounded-xl shadow-lg backdrop-filter backdrop-blur-lg py-12 flex justify-content flex-col"
       >
-        <h1 class="text-4xl font-bold mb-6 text-center">Upload Your Video</h1>
-        <p class="text-lg mb-6 text-gray-300 text-center">
+        <h1
+          class="text-4xl font-bold mb-6 text-center animate__animated animate__fadeInDown"
+        >
+          Upload Your Video
+        </h1>
+        <p
+          class="text-lg mb-6 text-gray-300 text-center animate__animated animate__fadeIn"
+        >
           Upload a video file, select a theme, and we'll analyze its sentiment
           to generate background music.
         </p>
@@ -222,7 +232,7 @@
             </div>
             <button
               type="submit"
-              class="py-3 mt-4 px-6 text-white text-lg transition-all rounded-lg shadow-xl bg-gradient-to-r from-violet-600 to-indigo-600 hover:bg-gradient-to-r hover:from-violet-400 hover:to-indigo-400 hover:-translate-y-1 duration-200"
+              class="animate__animated animate__pulse py-3 mt-4 px-6 text-white text-lg transition-all rounded-lg shadow-xl bg-gradient-to-r from-violet-600 to-indigo-600 hover:bg-gradient-to-r hover:from-violet-400 hover:to-indigo-400 hover:-translate-y-1 duration-200"
             >
               Upload Video
             </button>
