@@ -15,7 +15,9 @@ from get_theme import theme_prompts
 # from PIL import Image
 # from diffusers import StableDiffusionUpscalePipeline
 import subprocess
-
+import random
+from scipy.io.wavfile import read, write
+import numpy as np
 
 # if torch.cuda.is_available():
 #     device = torch.device('cuda')
@@ -75,12 +77,14 @@ def extract_audio(video_path):
     except Exception as e:
         error_message = f"Error extracting audio: {e}"
         print(error_message)
-        raise ValueError(error_message)
+        # raise ValueError(error_message)
 
 
 def transcribe_audio(audio_path):
     """Transcribe audio to text and return the transcript."""
     recognizer = sr.Recognizer()
+    if audio_path is None:
+        return " "
     with sr.AudioFile(audio_path) as source:
         audio_data = recognizer.record(source)
         try:
@@ -93,12 +97,23 @@ def transcribe_audio(audio_path):
 
 def mix_soundtrack(video_clip, theme):
     """Mix theme soundtrack with video audio and apply additional audio effects."""
-    soundtrack_path = os.path.join('soundtracks', theme + '.mp3')
+    index = random.randint(0, len(os.listdir(f'./soundtracks/{theme}'))-1)
+    soundtrack_path = os.path.join(f'./soundtracks/{theme}', sorted(os.listdir(f'./soundtracks/{theme}'))[index])
+
     if not os.path.exists(soundtrack_path):
         print(f"Soundtrack not found: {soundtrack_path}")
         return video_clip
 
     try:
+        # duration = video_clip.duration
+
+        # Edit the wav file to match the duration of the video
+        # adjust_duration = duration + 1
+        # audio_wav, _ = read(soundtrack_path)
+        # audio_wav = audio_wav.astype(np.float64)
+        # audio_wav = audio_wav[:int(adjust_duration * 32000)]
+        # print(audio_wav.shape)
+
         soundtrack = AudioFileClip(soundtrack_path).fx(afx.audio_normalize).fx(afx.audio_fadein, 1.0)
 
         # if the original video has audio, mix it with the soundtrack
@@ -138,22 +153,11 @@ def mix_soundtrack(video_clip, theme):
 #         video_clip = video_clip.set_frame(i, upscale_frame)
 
 def apply_filters(video_clip, theme):
-    if theme == 'vibey':
-        video_clip = video_clip.fx(vfx.colorx, 1.5).fx(vfx.adjust_contrast, 1.4)
-    elif theme == 'modern':
-        video_clip = video_clip.fx(vfx.colorx, 1.3).fx(vfx.adjust_contrast, 1.5)
-    elif theme == 'cinematic':
-        video_clip = video_clip.fx(vfx.crop, x1=0.1, y1=0.1, x2=-0.1, y2=-0.1).fx(vfx.colorx, 0.8)
-    elif theme == 'jazz':
-        video_clip = video_clip.fx(vfx.color_balance, midtones=[0.3, 0.3, 0.5], shadows=[0.2, 0.2, 0.3])
-    elif theme == 'retro':
-        video_clip = video_clip.fx(vfx.colorx, 0.9).fx(vfx.old_film, color=True)
-    elif theme == 'ambient':
-        video_clip = video_clip.fx(vfx.color_balance, midtones=[0.8, 0.8, 1.0], highlights=[0.9, 0.9, 1.1]).fx(vfx.painting, saturation=1.2)
-    else:
-        pass
+    if theme == 'cowboy':
+        # Example: Applying a color filter for the cowboy theme
+        video_clip = video_clip.fx(vfx.colorx, 0.7)
+    # Add other themes and their corresponding filters
     return video_clip
-
 
 @app.route('/upload', methods=['POST'])
 def upload_video():
