@@ -1,21 +1,33 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth bg-gradient-to-r from-slate-900 to-indigo-950 text-white">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html
+  lang="en"
+  class="scroll-smooth bg-gradient-to-r from-slate-900 to-indigo-950 text-white"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Transcript and Video Playback</title>
     <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="font-sans m-0 p-0 h-screen flex justify-center items-center relative">
+  </head>
+  <body
+    class="font-sans m-0 p-0 h-screen flex justify-center items-center relative"
+  >
     <!-- Navbar -->
     <nav
       class="bg-transparent text-white py-6 px-24 flex items-center justify-between z-10"
     >
-      <a class="font-bold text-xl tracking-tight" href="#">Music</a>
+      <a class="font-bold text-xl tracking-tight flex items-center" href="/">
+        <img
+          src="../static/Symphonic.png"
+          alt="Symphonic Logo"
+          class="w-12 h-12 mr-2"
+        />
+        Symphonic
+      </a>
       <div class="flex items-center">
         <div class="px-6 z-10">
           <a
-            class="text-sm px-6 py-3 leading-none rounded-full hover:bg-gray-700"
+            class="text-sm px-6 py-3 leading-none rounded-full hover:bg-indigo-700"
             href="/"
             >Home</a
           >
@@ -29,31 +41,46 @@
         </a>
       </div>
     </nav>
+    <!-- Navbar Ends -->
 
     <!-- Background -->
-        <div class="fixed inset-0 z-0">
-          <img
-            src="../static/bgpurple.svg"
-            class="min-h-full w-full object-cover"
-          />
-        </div>
-        <div class="fixed inset-0 z-1">
-          <img src="../static/bgblue.svg" class="min-h-full w-full object-cover" />
-        </div>
-
-    <div class="max-w-2xl mx-auto py-6 px-10 bg-white bg-opacity-20 rounded-xl shadow-lg backdrop-filter backdrop-blur-lg z-10">
-        <h1 class="text-4xl font-bold mb-6 text-center">Video and Transcript</h1>
-        <video class="w-full rounded-md shadow-md mb-6" controls>
-            <source src="{{ url_for('static', filename=video_filename) }}" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        <div class="bg-gray-800 p-6 rounded-lg shadow-lg text-gray-300">
-            <h5 class="text-xl font-semibold mb-3">Transcript</h5>
-            <p class="mb-4">{{ transcript }}</p>
-            <p>{{ theme_prompt }}</p>
-        </div>
+    <div class="fixed inset-0 z-0">
+      <img
+        src="../static/bgpurple.svg"
+        class="min-h-full w-full object-cover"
+      />
+    </div>
+    <div class="fixed inset-0 z-1">
+      <img src="../static/bgblue.svg" class="min-h-full w-full object-cover" />
     </div>
 
-    <chat-bot platform_id="1010e2f2-a7cd-4665-ab7c-6abd3ee81427" user_id="02e532dd-16d0-4e2f-8585-7c83a316a3d7" chatbot_id="edcdc7ea-9c51-4299-b861-ab2ec2620455"><a href="https://www.chatsimple.ai/?utm_source=widget&utm_medium=referral">deltahacks</a></chat-bot><script src="https://cdn.chatsimple.ai/chat-bot-loader.js" defer></script>
-</body>
+    <div
+      class="max-w-2xl mx-auto py-6 px-10 bg-white bg-opacity-20 rounded-xl shadow-lg backdrop-filter backdrop-blur-lg z-10"
+    >
+      <h1 class="text-4xl font-bold mb-6 text-center">Video and Transcript</h1>
+      <video class="w-full rounded-md shadow-md mb-6" controls>
+        <source
+          src="{{ url_for('static', filename=video_filename) }}"
+          type="video/mp4"
+        />
+        Your browser does not support the video tag.
+      </video>
+      <div class="bg-gray-800 p-6 rounded-lg shadow-lg text-gray-300">
+        <h5 class="text-xl font-semibold mb-3">Transcript</h5>
+        <p class="mb-4">{{ transcript }}</p>
+        <p>{{ theme_prompt }}</p>
+      </div>
+    </div>
+
+    <chat-bot
+      platform_id="1010e2f2-a7cd-4665-ab7c-6abd3ee81427"
+      user_id="02e532dd-16d0-4e2f-8585-7c83a316a3d7"
+      chatbot_id="edcdc7ea-9c51-4299-b861-ab2ec2620455"
+      ><a
+        href="https://www.chatsimple.ai/?utm_source=widget&utm_medium=referral"
+        >deltahacks</a
+      ></chat-bot
+    >
+    <script src="https://cdn.chatsimple.ai/chat-bot-loader.js" defer></script>
+  </body>
 </html>
