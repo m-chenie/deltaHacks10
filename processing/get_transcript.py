@@ -98,6 +98,7 @@ def transcribe_audio(audio_path):
 def mix_soundtrack(video_clip, theme):
     """Mix theme soundtrack with video audio and apply additional audio effects."""
     index = random.randint(0, len(os.listdir(f'./soundtracks/{theme}'))-1)
+    # index = 4
     soundtrack_path = os.path.join(f'./soundtracks/{theme}', sorted(os.listdir(f'./soundtracks/{theme}'))[index])
 
     if not os.path.exists(soundtrack_path):
@@ -153,10 +154,21 @@ def mix_soundtrack(video_clip, theme):
 #         video_clip = video_clip.set_frame(i, upscale_frame)
 
 def apply_filters(video_clip, theme):
-    if theme == 'cowboy':
-        # Example: Applying a color filter for the cowboy theme
-        video_clip = video_clip.fx(vfx.colorx, 0.7)
-    # Add other themes and their corresponding filters
+    if theme == 'vibey':
+        video_clip = video_clip.fx(vfx.colorx, factor=1.02)
+    elif theme == 'modern':
+        video_clip = video_clip.fx(vfx.lum_contrast, lum=1.01, contrast=1.01)
+    elif theme == 'cinematic':
+        video_clip = video_clip.fx(vfx.blackwhite).fx(vfx.gamma_corr, gamma=0.98)
+    elif theme == 'jazz':
+        video_clip = video_clip.fx(vfx.painting).fx(vfx.lum_contrast, lum=0.97)
+    elif theme == 'retro':
+        video_clip = video_clip.fx(vfx.blackwhite).fx(vfx.gamma_corr, gamma=0.92)
+    elif theme == 'ambient':
+        video_clip = video_clip.fx(vfx.painting).fx(vfx.colorx, factor=0.92)
+    else:
+        pass
+
     return video_clip
 
 @app.route('/upload', methods=['POST'])
