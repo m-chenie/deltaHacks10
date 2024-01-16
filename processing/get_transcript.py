@@ -120,7 +120,7 @@ def mix_soundtrack(video_clip, theme):
         # if the original video has audio, mix it with the soundtrack
         if video_clip.audio:
             original_audio = video_clip.audio.fx(afx.audio_normalize).volumex(1)
-            soundtrack = soundtrack.volumex(0.3)  # Adjust the soundtrack volume
+            soundtrack = soundtrack.volumex(0.4)  # Adjust the soundtrack volume
             final_audio = CompositeAudioClip([original_audio, soundtrack.set_duration(video_clip.duration)])
         else:
             final_audio = soundtrack.set_duration(video_clip.duration)
