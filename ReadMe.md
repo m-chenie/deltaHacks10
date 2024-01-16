@@ -1,4 +1,7 @@
-# Video Demo
+# Symphonic - DeltaHacks X Winner
+#### Best AI Application Built with Cloudflare
+
+## Video Demo
 [Watch the Video Demo](https://youtu.be/G6dtxx9pCsM)
 
 
